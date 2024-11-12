@@ -30,6 +30,7 @@ jobs:
       - uses: docker/build-push-action@v6
         with:
           context: .
+          file: .docker/Dockerfile-app
           platforms: linux/arm64
           push: true
           tags: "${{ github.repository }}:${{ steps.checkout.outputs.commit }},${{ github.repository }}:latest"
