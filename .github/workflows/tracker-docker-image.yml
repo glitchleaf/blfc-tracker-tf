@@ -8,6 +8,9 @@ on:
 permissions:
   packages: write
 
+env:
+  IMAGE_NAME: "ghcr.io/${{ github.repository }}"
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -38,4 +41,4 @@ jobs:
           file: .docker/Dockerfile-app
           platforms: linux/arm64
           push: true
-          tags: "${{ github.repository }}:${{ steps.checkout.outputs.commit }},${{ github.repository }}:latest"
+          tags: "${{ env.IMAGE_NAME }}:${{ steps.checkout.outputs.commit }},${{ env.IMAGE_NAME }}:latest"
