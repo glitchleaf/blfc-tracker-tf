@@ -20,22 +20,27 @@ jobs:
         with:
           repository: GoBLFC/Tracker
           ref: main
-      # TODO: publish at least one build first so we can debug this
-      # - name: check if release exists
-      #   run: |
-      #     gh api "/user/packages/container/goblfc-tracker/versions/${{ steps.checkout.outputs.commit }}"
-      #   env:
-      #     GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - id: check
+        run: |
+          SHOULD_BUILD="$(gh api "/user/packages/container/goblfc-tracker/versions/${{ steps.checkout.outputs.commit }}" | \
+            jq '[.[] | select(.metadata.container.tags | index("latest"))] | length == 0')"
+          echo "should-build=$SHOULD_BUILD" >> "$GITHUB_OUTPUT"
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - uses: docker/setup-qemu-action@v3
+        if: ${{ steps.check.outputs.should-build == 'true' }}
         with:
           platforms: arm64
       - uses: docker/setup-buildx-action@v3
+        if: ${{ steps.check.outputs.should-build == 'true' }}
       - uses: docker/login-action@v3
+        if: ${{ steps.check.outputs.should-build == 'true' }}
         with:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ github.token }}
       - uses: docker/build-push-action@v6
+        if: ${{ steps.check.outputs.should-build == 'true' }}
         with:
           context: .
           file: .docker/Dockerfile-app
