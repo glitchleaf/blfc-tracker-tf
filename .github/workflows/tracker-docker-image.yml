@@ -22,7 +22,8 @@ jobs:
           ref: main
       - id: check
         run: |
-          SHOULD_BUILD="$(gh api "/user/packages/container/goblfc-tracker/versions" | \
+          PACKAGE_NAME="$(echo "${{ github.repository }}" | cut -d '/' -f 2)"
+          SHOULD_BUILD="$(gh api "/user/packages/container/$PACKAGE_NAME/versions" | \
             jq '[.[] | select(.metadata.container.tags | index("latest"))] | length == 0')"
           echo "should-build=$SHOULD_BUILD" >> "$GITHUB_OUTPUT"
         env:
