@@ -22,7 +22,7 @@ jobs:
           ref: main
       - id: check
         run: |
-          SHOULD_BUILD="$(gh api "/user/packages/container/goblfc-tracker/versions/${{ steps.checkout.outputs.commit }}" | \
+          SHOULD_BUILD="$(gh api "/user/packages/container/goblfc-tracker/versions" | \
             jq '[.[] | select(.metadata.container.tags | index("latest"))] | length == 0')"
           echo "should-build=$SHOULD_BUILD" >> "$GITHUB_OUTPUT"
         env:
