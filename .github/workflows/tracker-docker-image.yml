@@ -62,4 +62,6 @@ jobs:
           file: .docker/Dockerfile-${{ matrix.image }}
           platforms: linux/amd64,linux/arm64
           push: true
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
           tags: "${{ env.IMAGE_NAME }}-${{ matrix.image }}:${{ steps.checkout.outputs.commit }},${{ env.IMAGE_NAME }}-${{ matrix.image }}:latest"
