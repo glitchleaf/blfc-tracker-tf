@@ -47,4 +47,12 @@ jobs:
           file: .docker/Dockerfile-app
           platforms: linux/arm64
           push: true
-          tags: "${{ env.IMAGE_NAME }}:${{ steps.checkout.outputs.commit }},${{ env.IMAGE_NAME }}:latest"
+          tags: "${{ env.IMAGE_NAME }}-app:${{ steps.checkout.outputs.commit }},${{ env.IMAGE_NAME }}-app:latest"
+      - uses: docker/build-push-action@v6
+        if: ${{ steps.check.outputs.should-build == 'true' }}
+        with:
+          context: .
+          file: .docker/Dockerfile-nginx
+          platforms: linux/arm64
+          push: true
+          tags: "${{ env.IMAGE_NAME }}-nginx:${{ steps.checkout.outputs.commit }},${{ env.IMAGE_NAME }}-nginx:latest"
