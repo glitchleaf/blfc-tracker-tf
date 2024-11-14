@@ -1,22 +1,29 @@
 terraform {
   backend "remote" {
-    organization = var.hcp_org
-    workspace {
-      name = var.hcp_workspace
+    workspaces {
+      prefix = "goblfc-tracker-"
     }
   }
 
   required_providers {
     aws = {
-      source = "hashicorp/aws"
+      source  = "hashicorp/aws"
+      version = "~> 5.0"
+    }
+    random = {
+      source  = "hashicorp/random"
+      version = "~> 3.0"
     }
   }
+
+  required_version = "~> 1.0"
 }
 
 provider "aws" {
   default_tags {
     tags = {
-      Product = "tracker"
+      Terraformed = "true"
+      Product     = "tracker"
     }
   }
 }

@@ -1,0 +1,4 @@
+domain_name     = "tracker.example.com"
+concat_base_uri = "https://reg.example.com"
+smtp_email      = "noreply@tracker.example.com"
+smtp_name       = "Tracker"
