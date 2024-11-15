@@ -12,8 +12,9 @@ locals {
     "TELEGRAM_BOT_TOKEN",
   ]
 
+  tracker_bootscript_b64 = filebase64("${path.module}/files/tracker_entrypoint.sh")
   nginx_bootscript_b64 = base64encode(templatefile(
-    "${path.module}/files/entrypoint.sh", {
+    "${path.module}/files/nginx_entrypoint.sh", {
       nginx_conf_template_b64 = filebase64("${path.module}/files/default.conf.template")
     },
   ))

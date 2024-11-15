@@ -71,6 +71,8 @@ resource "aws_ecs_task_definition" "tracker" {
       { name = "REDIS_URL", valueFrom = aws_ssm_parameter.REDIS_URL.arn },
       { name = "TELEGRAM_BOT_TOKEN", valueFrom = aws_ssm_parameter.manual_secrets["TELEGRAM_BOT_TOKEN"].arn },
     ]
+    entryPoint = ["/usr/bin/bash"]
+    command    = ["-c", "echo '${local.tracker_bootscript_b64}' | base64 -d | exec bash"]
   }])
 }
 
