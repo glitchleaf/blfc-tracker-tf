@@ -18,6 +18,6 @@ locals {
     },
   ))
 
-  db_url    = "pgsql://${random_pet.db_user.id}:${random_password.db_password.result}@${aws_rds_cluster.tracker.endpoint}:${aws_rds_cluster.tracker.port}/${aws_rds_cluster.tracker.database_name}"
-  redis_url = "rediss://${aws_elasticache_user.tracker.user_name}:${random_password.redis_password.result}@${aws_elasticache_serverless_cache.tracker.endpoint[0].address}:${aws_elasticache_serverless_cache.tracker.endpoint[0].port}"
+  db_url    = "pgsql://${random_pet.db_user.id}:${random_password.db_password.result}@${aws_db_instance.tracker.endpoint}/${aws_db_instance.tracker.db_name}"
+  redis_url = "rediss://${aws_elasticache_user.tracker.user_name}:${random_password.redis_password.result}@${aws_elasticache_replication_group.tracker.primary_endpoint_address}:${aws_elasticache_replication_group.tracker.port}"
 }

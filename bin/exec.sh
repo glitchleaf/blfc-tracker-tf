@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-set -xeuo pipefail
+set -euo pipefail
 
 TASK="${1:-}"
 if [ -z "$TASK" ]; then
