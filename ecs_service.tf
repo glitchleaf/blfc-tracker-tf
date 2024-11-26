@@ -13,9 +13,9 @@ resource "aws_ecs_service" "tracker" {
   }
 
   network_configuration {
-    subnets          = data.aws_subnets.private.ids
+    subnets          = data.aws_subnets.public.ids
     security_groups  = [aws_security_group.tracker.id]
-    assign_public_ip = false
+    assign_public_ip = true
   }
 }
 
