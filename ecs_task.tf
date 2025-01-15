@@ -17,7 +17,7 @@ resource "aws_ecs_task_definition" "tracker" {
     image     = "${var.tracker_image}-nginx:latest"
     essential = true
     portMappings = [{
-      containerPort = 80
+      containerPort = 443
     }]
     logConfiguration = {
       logDriver = "awslogs"
@@ -29,10 +29,7 @@ resource "aws_ecs_task_definition" "tracker" {
     }
     environment = [
       { name = "NGINX_HOST", value = var.domain_name },
-      { name = "NGINX_HTTP_PORT", value = "80" },
-      { name = "NGINX_HTTPS_PORT", value = "443" },
-      { name = "NGINX_EXTERNAL_HTTP_PORT", value = "80" },
-      { name = "NGINX_EXTERNAL_HTTPS_PORT", value = "443" },
+      { name = "NGINX_PORT", value = "443" },
     ]
     entryPoint = ["/usr/bin/bash"]
     // ugly but vaguely less shit than the alternatives that come to mind

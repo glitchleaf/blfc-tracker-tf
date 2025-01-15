@@ -15,16 +15,17 @@ resource "aws_lb" "tracker" {
 }
 
 resource "aws_lb_target_group" "tracker" {
-  name        = aws_lb.tracker.name
-  port        = 443
-  protocol    = "HTTP"
-  target_type = "ip"
-  vpc_id      = data.aws_vpc.resolved.id
+  name             = aws_lb.tracker.name
+  port             = 443
+  protocol         = "HTTPS"
+  protocol_version = "HTTP2"
+  target_type      = "ip"
+  vpc_id           = data.aws_vpc.resolved.id
 
   health_check {
     enabled  = true
     port     = "traffic-port"
-    protocol = "HTTP"
+    protocol = "HTTPS"
     path     = "/healthcheck"
   }
 }
@@ -33,7 +34,7 @@ resource "aws_lb_listener" "tracker" {
   load_balancer_arn = aws_lb.tracker.arn
   port              = "443"
   protocol          = "HTTPS"
-  ssl_policy        = "ELBSecurityPolicy-TLS-1-2-2017-01"
+  ssl_policy        = "ELBSecurityPolicy-TLS13-1-2-2021-06"
   certificate_arn   = aws_acm_certificate.tracker.arn
 
   default_action {
@@ -60,8 +61,8 @@ resource "aws_vpc_security_group_ingress_rule" "alb_tracker_https" {
 resource "aws_vpc_security_group_egress_rule" "alb_tracker_backend" {
   security_group_id = aws_security_group.alb_tracker.id
   cidr_ipv4         = data.aws_vpc.resolved.cidr_block
-  from_port         = 80
-  to_port           = 80
+  from_port         = 443
+  to_port           = 443
   ip_protocol       = "tcp"
-  description       = "Allow talking to whole VPC"
+  description       = "Allow talking HTTPS to whole VPC"
 }

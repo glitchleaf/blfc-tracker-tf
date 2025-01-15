@@ -12,11 +12,11 @@ resource "aws_ecs_service" "tracker" {
   load_balancer {
     target_group_arn = aws_lb_target_group.tracker.arn
     container_name   = "nginx"
-    container_port   = 80
+    container_port   = 443
   }
 
   network_configuration {
-    subnets          = data.aws_subnets.public.ids
+    subnets          = local.lb_subnets
     security_groups  = [aws_security_group.tracker.id]
     assign_public_ip = true
   }
@@ -30,8 +30,8 @@ resource "aws_security_group" "tracker" {
 
 resource "aws_vpc_security_group_ingress_rule" "tracker_ingress" {
   security_group_id            = aws_security_group.tracker.id
-  from_port                    = 80
-  to_port                      = 80
+  from_port                    = 443
+  to_port                      = 443
   ip_protocol                  = "tcp"
   referenced_security_group_id = aws_security_group.alb_tracker.id
   description                  = "Allow the ALB in"
