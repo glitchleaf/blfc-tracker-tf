@@ -3,7 +3,7 @@ resource "aws_lb" "tracker" {
   internal                   = false
   load_balancer_type         = "application"
   security_groups            = [aws_security_group.alb_tracker.id]
-  subnets                    = data.aws_subnets.public.ids
+  subnets                    = local.lb_subnets
   drop_invalid_header_fields = true
   enable_deletion_protection = true
 }

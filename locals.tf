@@ -21,4 +21,6 @@ locals {
 
   db_url    = "pgsql://${random_pet.db_user.id}:${random_password.db_password.result}@${aws_db_instance.tracker.endpoint}/${aws_db_instance.tracker.db_name}"
   redis_url = "rediss://${aws_elasticache_user.tracker.user_name}:${random_password.redis_password.result}@${aws_elasticache_replication_group.tracker.primary_endpoint_address}:${aws_elasticache_replication_group.tracker.port}"
+
+  lb_subnets = slice(data.aws_subnets.public.ids, 0, min(length(data.aws_subnets.public.ids), var.lb_zones))
 }
