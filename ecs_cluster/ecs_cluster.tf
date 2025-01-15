@@ -19,7 +19,7 @@ resource "aws_ecs_cluster" "default" {
 
   setting {
     name  = "containerInsights"
-    value = "enabled"
+    value = var.ecs_container_insights_state
   }
 }
 

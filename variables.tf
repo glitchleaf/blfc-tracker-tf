@@ -8,6 +8,12 @@ variable "domain_name" {
   type        = string
 }
 
+variable "ecs_container_insights_state" {
+  description = "Whether or not to enable container insights for monitoring the service"
+  default     = "disabled"
+  type        = string
+}
+
 variable "smtp_email" {
   description = "The sender address on outbound emails"
   type        = string
