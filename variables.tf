@@ -14,6 +14,18 @@ variable "ecs_container_insights_state" {
   type        = string
 }
 
+variable "lb_logs_retention_days" {
+  description = "How long should we be keeping loadbalancer logs?"
+  default     = 0
+  type        = number
+}
+
+variable "lb_zones" {
+  description = "How many availibility zones to have the load balancer listening in (min is 2)"
+  default     = 2
+  type        = number
+}
+
 variable "smtp_email" {
   description = "The sender address on outbound emails"
   type        = string
@@ -22,12 +34,6 @@ variable "smtp_email" {
 variable "smtp_name" {
   description = "The sender name on outbound emails"
   type        = string
-}
-
-variable "lb_zones" {
-  description = "How many availibility zones to have the load balancer listening in (min is 2)"
-  default     = 2
-  type        = number
 }
 
 variable "tracker_image" {

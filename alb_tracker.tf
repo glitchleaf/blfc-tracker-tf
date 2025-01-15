@@ -6,6 +6,12 @@ resource "aws_lb" "tracker" {
   subnets                    = local.lb_subnets
   drop_invalid_header_fields = true
   enable_deletion_protection = true
+
+  access_logs {
+    bucket  = aws_s3_bucket.logs.id
+    prefix  = "tracker-lb"
+    enabled = var.lb_logs_retention_days > 0
+  }
 }
 
 resource "aws_lb_target_group" "tracker" {
