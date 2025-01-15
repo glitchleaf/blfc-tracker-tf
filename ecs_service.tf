@@ -6,6 +6,9 @@ resource "aws_ecs_service" "tracker" {
   launch_type            = "FARGATE"
   enable_execute_command = true
 
+  # give the nginx container a second to setup its certs
+  health_check_grace_period_seconds = 30
+
   load_balancer {
     target_group_arn = aws_lb_target_group.tracker.arn
     container_name   = "nginx"
