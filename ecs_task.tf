@@ -39,7 +39,7 @@ resource "aws_ecs_task_definition" "tracker" {
     command = ["-c", "echo '${local.nginx_bootscript_b64}' | base64 -d | exec bash"]
     }, {
     name      = "tracker"
-    image     = "${var.tracker_image}-app:latest"
+    image     = "${var.tracker_image}:latest"
     essential = true
     logConfiguration = {
       logDriver = "awslogs"

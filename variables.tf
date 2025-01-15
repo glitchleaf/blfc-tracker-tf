@@ -31,8 +31,8 @@ variable "lb_zones" {
 }
 
 variable "tracker_image" {
-  description = "Docker image tag for Tracker itself, should be a prefix for the two images (nginx and app)"
-  default     = "ghcr.io/glitchleaf/blfc-tracker-tf"
+  description = "Docker image tag for Tracker itself, we assume nginx is this plus '-nginx'"
+  default     = "ghcr.io/goblfc/tracker"
   type        = string
 }
 

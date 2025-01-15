@@ -60,3 +60,17 @@ Run the migrations to get the final bits wrapped up:
 bin/exec.sh
 php artisan migrate
 ```
+
+## Operating
+
+If you should need logs from the containers it's usually more comfortable to grab them with awscli:
+
+```shell
+aws logs tail --follow ecs.tracker
+```
+
+Also the exec script can target specific tasks and the nginx container for debugging:
+
+```shell
+bin/exec.sh example-taskid-ba8791cd111b nginx
+```

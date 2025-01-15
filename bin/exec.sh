@@ -18,4 +18,6 @@ if [ -z "$TASK" ]; then
   fi
 fi
 
-exec aws ecs execute-command --cluster default --container tracker --command '/bin/bash' --interactive --task "$TASK"
+CONTAINER="${2:-tracker}"
+
+exec aws ecs execute-command --cluster default --container $CONTAINER --command '/bin/bash' --interactive --task "$TASK"
