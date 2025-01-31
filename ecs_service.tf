@@ -1,4 +1,5 @@
 resource "aws_ecs_service" "tracker" {
+  #checkov:skip=CKV_AWS_333:Public address is intentional because it lets me avoid paying for a NAT Gateway
   name                   = "tracker"
   cluster                = module.ecs_cluster.name
   task_definition        = aws_ecs_task_definition.tracker.arn

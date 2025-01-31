@@ -74,7 +74,8 @@ resource "aws_ecs_task_definition" "tracker" {
 }
 
 resource "aws_cloudwatch_log_group" "tracker" {
+  #checkov:skip=CKV_AWS_338:the user can configure that long if they want it
   name              = "ecs.tracker"
-  retention_in_days = 3
+  retention_in_days = var.ecs_logs_retention_days
   kms_key_id        = aws_kms_alias.tracker.arn
 }

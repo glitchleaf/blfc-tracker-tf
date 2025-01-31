@@ -10,8 +10,14 @@ variable "domain_name" {
 
 variable "ecs_container_insights_state" {
   description = "Whether or not to enable container insights for monitoring the service"
-  default     = "disabled"
+  default     = "enabled"
   type        = string
+}
+
+variable "ecs_logs_retention_days" {
+  description = "How long should we be keeping loadbalancer logs?"
+  default     = 0
+  type        = number
 }
 
 variable "lb_logs_retention_days" {

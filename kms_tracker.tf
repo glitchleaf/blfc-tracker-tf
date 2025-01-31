@@ -6,6 +6,9 @@ resource "aws_kms_key" "tracker" {
 }
 
 data "aws_iam_policy_document" "tracker_kms" {
+  #checkov:skip=CKV_AWS_109:Is this even possible on a resource policy?
+  #checkov:skip=CKV_AWS_111:Silly on a resource policy
+  #checkov:skip=CKV_AWS_356:ditto
   statement {
     actions   = ["kms:*"]
     resources = ["*"]

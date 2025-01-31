@@ -4,6 +4,7 @@ resource "random_password" "redis_password" {
 }
 
 resource "aws_elasticache_replication_group" "tracker" {
+  #checkov:skip=CKV2_AWS_50:if we get enough load on redis to justify multi-az we probably need to refactor the whole app
   replication_group_id = "tracker"
   description          = "Used by Tracker to store session info"
 
