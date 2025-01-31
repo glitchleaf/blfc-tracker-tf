@@ -1,6 +1,6 @@
 resource "aws_lb" "tracker" {
-  #checkov:skip=CKV2_AWS_28:CloudWAF is shit anyways
-  #checkov:skip=CKV_AWS_91:User can set it through the var if needed
+  # checkov:skip=CKV2_AWS_28:CloudWAF is shit anyways
+  # checkov:skip=CKV_AWS_91:User can set it through the var if needed
   name                       = "tracker"
   internal                   = false
   load_balancer_type         = "application"

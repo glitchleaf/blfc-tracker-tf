@@ -6,11 +6,12 @@ resource "random_id" "logs_bucket_suffix" {
 
 resource "aws_s3_bucket" "logs" {
   # not really relevant for short lived logs
-  #checkov:skip=CKV2_AWS_62:ditto
-  #checkov:skip=CKV_AWS_144:ditto
-  #checkov:skip=CKV_AWS_145:ditto
-  #checkov:skip=CKV_AWS_18:ditto
-  #checkov:skip=CKV_AWS_21:ditto
+  # checkov:skip=CKV2_AWS_62:ditto
+  # checkov:skip=CKV_AWS_144:ditto
+  # checkov:skip=CKV_AWS_145:ditto
+  # checkov:skip=CKV_AWS_18:ditto
+  # checkov:skip=CKV_AWS_21:ditto
+  #ts:skip=AWS.S3Bucket.IAM.High.0370
   bucket = "logs-${random_id.logs_bucket_suffix.hex}"
 }
 
@@ -43,7 +44,7 @@ data "aws_iam_policy_document" "logs" {
 }
 
 resource "aws_s3_bucket_lifecycle_configuration" "logs" {
-  #checkov:skip=CKV_AWS_300:checkov is dumb and can;t tell this is set
+  # checkov:skip=CKV_AWS_300:checkov is dumb and can;t tell this is set
   bucket = aws_s3_bucket.logs.id
 
   rule {

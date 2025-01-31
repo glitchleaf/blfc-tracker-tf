@@ -6,7 +6,7 @@
 
 This creates the role in AWS that HCP will assume to manage our resources, note
 that this role has admin access by default. Probably don't give just anyone the
-ability to write to this repo as it can easily be abused.
+ability to write to this repository as it can easily be abused.
 
 This setup only needs to happen once. Ensure you have jq and awscli (with creds
 configured) then run the following, replacing the placeholders as appropriate:
