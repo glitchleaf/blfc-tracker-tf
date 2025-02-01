@@ -22,3 +22,5 @@ jobs:
       - uses: super-linter/super-linter/slim@v7
         env:
           GITHUB_TOKEN: ${{ github.token }}
+          # terrascan throws when you use variables in a bunch of places and it seems redundant
+          VALIDATE_TERRAFORM_TERRASCAN: false

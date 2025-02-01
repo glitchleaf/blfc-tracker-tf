@@ -3,7 +3,6 @@ resource "random_password" "redis_password" {
   special = false
 }
 
-# tflint-ignore:aws_elasticache_replication_group_default_parameter_group
 resource "aws_elasticache_replication_group" "tracker" {
   # checkov:skip=CKV2_AWS_50:if we get enough load on redis to justify multi-az we probably need to refactor the whole app
   replication_group_id = "tracker"
@@ -18,13 +17,18 @@ resource "aws_elasticache_replication_group" "tracker" {
   maintenance_window          = "Mon:10:00-Mon:13:00"
   multi_az_enabled            = false
   node_type                   = "cache.t3.micro"
-  parameter_group_name        = "default.valkey7"
+  parameter_group_name        = aws_elasticache_replication_group.tracker.name
   port                        = 6379
   preferred_cache_cluster_azs = slice(data.aws_availability_zones.azs.names, 0, 1)
   security_group_ids          = [aws_security_group.redis_tracker.id]
   subnet_group_name           = aws_elasticache_subnet_group.private.name
   transit_encryption_enabled  = true
   user_group_ids              = [aws_elasticache_user_group.tracker.id]
+}
+
+resource "aws_elasticache_parameter_group" "tracker" {
+  name   = aws_elasticache_replication_group.tracker.replication_group_id
+  family = "valkey7"
 }
 
 resource "aws_elasticache_subnet_group" "private" {
