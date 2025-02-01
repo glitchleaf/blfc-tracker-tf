@@ -11,7 +11,7 @@ resource "aws_s3_bucket" "logs" {
   # checkov:skip=CKV_AWS_145:ditto
   # checkov:skip=CKV_AWS_18:ditto
   # checkov:skip=CKV_AWS_21:ditto
-  #ts:skip=AWS.S3Bucket.IAM.High.0370
+  #ts:skip=AC_AWS_0214
   bucket = "logs-${random_id.logs_bucket_suffix.hex}"
 }
 

@@ -3,9 +3,9 @@ resource "random_password" "redis_password" {
   special = false
 }
 
+# tflint-ignore:aws_elasticache_replication_group_default_parameter_group
 resource "aws_elasticache_replication_group" "tracker" {
   # checkov:skip=CKV2_AWS_50:if we get enough load on redis to justify multi-az we probably need to refactor the whole app
-  # tflint-ignore:aws_elasticache_replication_group_default_parameter_group
   replication_group_id = "tracker"
   description          = "Used by Tracker to store session info"
 

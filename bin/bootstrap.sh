@@ -3,8 +3,8 @@
 set -euo pipefail
 
 E() {
-    echo "$@" > /dev/stderr
-    exit 1
+	echo "$@" >/dev/stderr
+	exit 1
 }
 
 ## Setup
@@ -20,9 +20,9 @@ ROLE_NAME="${ROLE_NAME:-hcp}"
 # shellcheck disable=SC2016 # false positive
 OIDC_PROVIDERS="$(aws iam list-open-id-connect-providers --query 'OpenIDConnectProviderList[?contains(Arn, `app.terraform.io`)].Arn')"
 if [ "$(jq length <<<"$OIDC_PROVIDERS")" == "0" ]; then
-    OIDC_PROVIDER_ARN="$(aws iam create-open-id-connect-provider --url 'https://app.terraform.io' --client-id-list 'aws.workload.identity' --query 'OpenIDConnectProviderArn') --output text"
+	OIDC_PROVIDER_ARN="$(aws iam create-open-id-connect-provider --url 'https://app.terraform.io' --client-id-list 'aws.workload.identity' --query 'OpenIDConnectProviderArn') --output text"
 else
-    OIDC_PROVIDER_ARN="$(jq -r first <<<"$OIDC_PROVIDERS")"
+	OIDC_PROVIDER_ARN="$(jq -r first <<<"$OIDC_PROVIDERS")"
 fi
 echo "oidc_arn: $OIDC_PROVIDER_ARN"
 
@@ -31,22 +31,22 @@ echo "oidc_arn: $OIDC_PROVIDER_ARN"
 ASSUME_ROLE_DOC="$(mktemp)"
 jq -c . >"$ASSUME_ROLE_DOC" <<EOF
 {
-  "Version": "2012-10-17",
-  "Statement": [{
-    "Effect": "Allow",
-    "Principal": { "Federated": "$OIDC_PROVIDER_ARN" },
-    "Action": "sts:AssumeRoleWithWebIdentity",
-    "Condition": {
-      "StringEquals": { "app.terraform.io:aud": "aws.workload.identity" },
-      "StringLike": { "app.terraform.io:sub": "organization:$ORG_NAME:project:$PROJECT_NAME:workspace:*:run_phase:*" }
-    }
-  }]
+	"Version": "2012-10-17",
+	"Statement": [{
+		"Effect": "Allow",
+		"Principal": { "Federated": "$OIDC_PROVIDER_ARN" },
+		"Action": "sts:AssumeRoleWithWebIdentity",
+		"Condition": {
+			"StringEquals": { "app.terraform.io:aud": "aws.workload.identity" },
+			"StringLike": { "app.terraform.io:sub": "organization:$ORG_NAME:project:$PROJECT_NAME:workspace:*:run_phase:*" }
+		}
+	}]
 }
 EOF
 
 ROLE="$(aws iam get-role --role-name "$ROLE_NAME" || echo '')"
 if [ "$ROLE" == "" ]; then
-    ROLE="$(aws iam create-role --role-name "$ROLE_NAME" --assume-role-policy-document "file://$ASSUME_ROLE_DOC")"
+	ROLE="$(aws iam create-role --role-name "$ROLE_NAME" --assume-role-policy-document "file://$ASSUME_ROLE_DOC")"
 fi
 echo "role_arn: $(jq -r .Role.Arn <<<"$ROLE")"
 

@@ -13,8 +13,8 @@ resource "aws_db_instance" "tracker" {
   # checkov:skip=CKV_AWS_129:ditto
   # checkov:skip=CKV_AWS_157:no one is paying us to run this shit lol, I ain't going that hard with it
   # checkov:skip=CKV_AWS_161:not worth figuring out how to add IAM auth to Tracker
-  #ts:skip=AWS.RDS.DS.High.1042
-  #ts:skip=AWS.RDS.DataSecurity.High.0577
+  #ts:skip=AC_AWS_0057
+  #ts:skip=AC_AWS_0053
   allocated_storage               = 5
   auto_minor_version_upgrade      = true
   availability_zone               = data.aws_availability_zones.azs.names[0]
