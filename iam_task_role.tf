@@ -26,3 +26,18 @@ resource "aws_iam_role_policy" "tracker_task" {
   role   = aws_iam_role.tracker_task.name
   policy = data.aws_iam_policy_document.tracker_task.json
 }
+
+data "aws_iam_policy_document" "dns_update" {
+  statement {
+    actions   = ["route53:ChangeResourceRecordSets"]
+    resources = [aws_route53_zone.tracker.arn]
+  }
+}
+
+resource "aws_iam_role_policy" "dns_update" {
+  count = var.lb_zones == 0 ? 1 : 0
+
+  name   = "${aws_iam_role.tracker_task.name}-dns-update"
+  role   = aws_iam_role.tracker_task.name
+  policy = data.aws_iam_policy_document.dns_update.json
+}

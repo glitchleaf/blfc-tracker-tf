@@ -21,5 +21,5 @@ resource "aws_route53_record" "tracker_cert_validation" {
   records         = [each.value.record]
   ttl             = 60
   type            = each.value.type
-  zone_id         = aws_route53_zone.tracker.zone_id
+  zone_id         = var.zone_id
 }

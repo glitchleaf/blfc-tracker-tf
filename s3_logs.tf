@@ -48,15 +48,11 @@ resource "aws_s3_bucket_lifecycle_configuration" "logs" {
   bucket = aws_s3_bucket.logs.id
 
   rule {
-    id     = "lb-logs"
+    id     = "logs"
     status = "Enabled"
 
     abort_incomplete_multipart_upload {
       days_after_initiation = 2
-    }
-
-    filter {
-      prefix = aws_lb.tracker.access_logs[0].prefix
     }
 
     expiration {

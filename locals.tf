@@ -18,6 +18,12 @@ locals {
       nginx_conf_template_b64 = filebase64("${path.module}/files/default.conf.template")
     },
   ))
+  dns_bootscript_b64 = base64encode(templatefile(
+    "${path.module}/files/dns_entrypoint.sh", {
+      domain_name    = var.domain_name
+      hosted_zone_id = aws_route53_zone.tracker.zone_id
+    },
+  ))
 
   db_url    = "pgsql://${random_pet.db_user.id}:${random_password.db_password.result}@${aws_db_instance.tracker.endpoint}/${aws_db_instance.tracker.db_name}"
   redis_url = "rediss://${aws_elasticache_user.tracker.user_name}:${random_password.redis_password.result}@${aws_elasticache_replication_group.tracker.primary_endpoint_address}:${aws_elasticache_replication_group.tracker.port}"

@@ -1,4 +1,6 @@
 resource "aws_ecs_cluster" "default" {
+  # checkov:skip=CKV_AWS_65:The caller gets to decide they wanna spend the money for it
+
   name = "default"
 
   configuration {

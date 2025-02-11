@@ -17,7 +17,7 @@ resource "aws_elasticache_replication_group" "tracker" {
   maintenance_window          = "Mon:10:00-Mon:13:00"
   multi_az_enabled            = false
   node_type                   = "cache.t3.micro"
-  parameter_group_name        = aws_elasticache_replication_group.tracker.name
+  parameter_group_name        = aws_elasticache_parameter_group.tracker.name
   port                        = 6379
   preferred_cache_cluster_azs = slice(data.aws_availability_zones.azs.names, 0, 1)
   security_group_ids          = [aws_security_group.redis_tracker.id]
@@ -27,7 +27,7 @@ resource "aws_elasticache_replication_group" "tracker" {
 }
 
 resource "aws_elasticache_parameter_group" "tracker" {
-  name   = aws_elasticache_replication_group.tracker.replication_group_id
+  name   = "tracker"
   family = "valkey7"
 }
 

@@ -27,8 +27,8 @@ variable "lb_logs_retention_days" {
 }
 
 variable "lb_zones" {
-  description = "How many availibility zones to have the load balancer listening in (min is 2)"
-  default     = 2
+  description = "How many availibility zones to have the load balancer listening in (min is 2, or 0 to skip the ALB)"
+  default     = 0
   type        = number
 }
 
@@ -40,6 +40,12 @@ variable "smtp_email" {
 variable "smtp_name" {
   description = "The sender name on outbound emails"
   type        = string
+}
+
+variable "task_count" {
+  description = "How many copies of Tracker should we run?"
+  default     = 1
+  type        = number
 }
 
 variable "tracker_image" {
