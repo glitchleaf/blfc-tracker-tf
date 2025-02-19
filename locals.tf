@@ -1,4 +1,7 @@
 locals {
+  internal_name  = "app.${var.domain_name}"
+  tracker_domain = var.cloudflare_api_token == "" ? var.domain_name : local.internal_name
+
   # these will be created with an empty default value that you're meant to set
   # manually in AWS.
   manual_secrets = [
@@ -20,7 +23,7 @@ locals {
   ))
   dns_bootscript_b64 = base64encode(templatefile(
     "${path.module}/files/dns_entrypoint.sh", {
-      domain_name    = var.domain_name
+      domain_name    = local.tracker_domain
       hosted_zone_id = aws_route53_zone.tracker.zone_id
     },
   ))

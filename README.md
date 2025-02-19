@@ -15,6 +15,12 @@ configured) then run the following, replacing the placeholders as appropriate:
 ORG_NAME=hcp-org-name PROJECT_NAME=hcp-project-name bash bootstrap.sh
 ```
 
+### Cloudflare
+
+If an API token is given for Cloudflare we'll provision it in front of Tracker.
+Note that this token needs `Account.Account_Settings -> Read` and `Zone.Zone ->
+Edit`.
+
 ### HCP
 
 Set the following variables in the Workspace:

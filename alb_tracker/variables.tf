@@ -6,6 +6,10 @@ variable "domain_name" {
   type = string
 }
 
+variable "ingress_cidrs" {
+  type = set(string)
+}
+
 variable "lb_logs_retention_days" {
   type = number
 }

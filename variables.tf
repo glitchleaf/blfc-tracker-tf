@@ -1,3 +1,8 @@
+variable "cloudflare_api_token" {
+  description = "If given, we'll put cloudflare in front of tracker"
+  type        = string
+}
+
 variable "concat_base_uri" {
   description = "URL for the ConCat instance we're paired with"
   type        = string

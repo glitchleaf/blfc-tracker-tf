@@ -1,12 +1,11 @@
-# moved to a module to spare us having to write as many count checks
-
 module "alb_tracker" {
   count = var.lb_zones > 1 ? 1 : 0
 
   source = "./alb_tracker"
 
   cidr_block             = data.aws_vpc.resolved.cidr_block
-  domain_name            = var.domain_name
+  domain_name            = local.tracker_domain
+  ingress_cidrs          = var.cloudflare_api_token == "" ? ["0.0.0.0/0"] : module.cloudflare.cidrs
   lb_logs_retention_days = var.lb_logs_retention_days
   lb_subnets             = local.lb_subnets
   logs_bucket            = aws_s3_bucket.logs.id
