@@ -66,6 +66,12 @@ variable "tracker_spec_memory" {
   type        = number
 }
 
+variable "use_cloudfront" {
+  description = "Use cloudfront as a CDN, requires lb_zones > 1"
+  default     = false
+  type        = bool
+}
+
 variable "vpc_name" {
   description = "Name of the VPC to run our stuff in, leave as default to have one created with 10.0.0.0/16"
   default     = "default"

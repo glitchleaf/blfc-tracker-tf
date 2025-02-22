@@ -22,6 +22,10 @@ variable "vpc_id" {
   type = string
 }
 
+variable "use_cloudfront" {
+  type = bool
+}
+
 variable "zone_id" {
   type = string
 }

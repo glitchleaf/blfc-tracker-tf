@@ -4,7 +4,7 @@ resource "aws_lb" "tracker" {
   # checkov:skip=CKV_AWS_150:Fuckin annoying ass rule
 
   name                       = "tracker"
-  internal                   = false
+  internal                   = var.use_cloudfront
   load_balancer_type         = "application"
   security_groups            = [aws_security_group.alb_tracker.id]
   subnets                    = var.lb_subnets
@@ -21,7 +21,7 @@ resource "aws_lb_target_group" "tracker" {
   name             = aws_lb.tracker.name
   port             = 443
   protocol         = "HTTPS"
-  protocol_version = "HTTP2"
+  protocol_version = var.use_cloudfront ? "HTTP1" : "HTTP2"
   target_type      = "ip"
   vpc_id           = var.vpc_id
 
