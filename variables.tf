@@ -49,8 +49,14 @@ variable "task_count" {
 }
 
 variable "tracker_image" {
-  description = "Docker image tag for Tracker itself, we assume nginx is this plus '-nginx'"
+  description = "Docker image for Tracker itself, we assume nginx is this plus '-nginx'"
   default     = "ghcr.io/goblfc/tracker"
+  type        = string
+}
+
+variable "tracker_image_tag" {
+  description = "Docker image tag for Tracker (branch name or `latest`)"
+  default     = "latest"
   type        = string
 }
 

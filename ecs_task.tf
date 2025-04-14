@@ -16,7 +16,7 @@ resource "aws_ecs_task_definition" "tracker" {
     [
       {
         name      = "nginx"
-        image     = "${var.tracker_image}-nginx:latest"
+        image     = "${var.tracker_image}-nginx:${var.tracker_image_tag}"
         essential = true
         portMappings = [{
           containerPort = 443
@@ -39,7 +39,7 @@ resource "aws_ecs_task_definition" "tracker" {
       },
       {
         name      = "tracker"
-        image     = "${var.tracker_image}:latest"
+        image     = "${var.tracker_image}:${var.tracker_image_tag}"
         essential = true
         logConfiguration = {
           logDriver = "awslogs"
