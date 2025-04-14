@@ -38,6 +38,16 @@ resource "aws_acm_certificate" "cloudfront" {
   }
 }
 
+# ensure we can issue certs from ACM
+resource "aws_route53_record" "caa_acm" {
+  allow_overwrite = true
+  name            = var.domain_name
+  records         = ["0 issue \"amazon.com\""]
+  ttl             = 60
+  type            = "CAA"
+  zone_id         = var.zone_id
+}
+
 resource "aws_route53_record" "cloudfront_cert_validation" {
   for_each = {
     for dvo in(var.use_cloudfront ? aws_acm_certificate.cloudfront[0].domain_validation_options : []) : dvo.domain_name => {
