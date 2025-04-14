@@ -4,6 +4,15 @@ resource "aws_security_group" "alb_tracker" {
   vpc_id      = var.vpc_id
 }
 
+resource "aws_vpc_security_group_ingress_rule" "alb_tracker_http" {
+  security_group_id = aws_security_group.alb_tracker.id
+  cidr_ipv4         = "0.0.0.0/0"
+  from_port         = 80
+  to_port           = 80
+  ip_protocol       = "tcp"
+  description       = "Allow the ALB to upgrade http to https"
+}
+
 resource "aws_vpc_security_group_ingress_rule" "alb_tracker_https" {
   security_group_id = aws_security_group.alb_tracker.id
   cidr_ipv4         = "0.0.0.0/0"
