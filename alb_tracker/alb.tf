@@ -21,7 +21,7 @@ resource "aws_lb_target_group" "tracker" {
   name             = aws_lb.tracker.name
   port             = 443
   protocol         = "HTTPS"
-  protocol_version = var.use_cloudfront ? "HTTP1" : "HTTP2"
+  protocol_version = "HTTP1"
   target_type      = "ip"
   vpc_id           = var.vpc_id
 

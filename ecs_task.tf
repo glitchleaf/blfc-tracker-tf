@@ -58,6 +58,10 @@ resource "aws_ecs_task_definition" "tracker" {
           { name = "MAILER_FROM_NAME", value = var.smtp_name },
           { name = "MAIL_MAILER", value = "smtp" },
           { name = "QUEUE_CONNECTION", value = "redis" },
+          { name = "SESSION_DOMAIN", value = "null" },
+          { name = "SESSION_DRIVER", value = "redis" },
+          { name = "SESSION_ENCRYPT", value = "true" },
+          { name = "SESSION_LIFETIME", value = "60" },
         ]
         secrets = [
           { name = "APP_KEY", valueFrom = aws_ssm_parameter.manual_secrets["APP_KEY"].arn },

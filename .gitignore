@@ -1,4 +1,7 @@
 .terraform.lock.hcl
 .terraform
-
 terraform.tfvars
+terraform.tfvars*
+
+logs/
+tmp/
